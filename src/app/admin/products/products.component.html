@@ -1,0 +1,109 @@
+<div class="row">
+    <!-- 
+    - La directiva ngClass se utiliza para aplicar clases CSS condicionalmente 
+    - isSidePanelVisible es una variable booleana del componente. products.component.ts 
+    - Si isSidePanelVisible es verdadero, se aplica la clase 'col-8'; si es falso, se aplica la clase 'col-12' -->
+    <div [ngClass]="isSidePanelVisible ? 'col-8' : 'col-12'">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <div class="row">
+                    <div class="col-6">
+                        Lista de producto
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class="btn btn-sm btn-success" (click)="openSidePanel()">Nuevo</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3" *ngFor="let prod of productsList">
+                        <div class="card">
+                            <img class="card-img-top" style="height: 12.125rem;" [src]="prod.productImageUrl" alt="Card image">
+                            <div class="card-body">
+                                <h4 class="card-title">{{prod.productName}}</h4>
+                                <p class="card-text">{{prod.categoryName}}</p>
+                                <a href="#" class="btn btn-primary" (click)="editarProducto(prod)">Editar</a>
+                                <a href="#" class="btn btn-danger mx-2" (click)="eliminarProducto(prod)">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 
+        - La directiva *ngIf sirve para condicionalmente agregar o eliminar elementos del DOM en 
+        función de una expresión booleana evaluada en tiempo de ejecución.
+        
+        - Se llama la variable isSidePanelVisible, como es FALSE nos oculata el contenedor,
+        a menos que cambie a TRUE -->
+    <div class="col-4" *ngIf="isSidePanelVisible">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <div class="row">
+                    <div class="col-6">
+                        Nuevo producto
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class="btn btn-sm btn-success" (click)="closeSidePanel()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="">SKU</label>
+                        <input class="form-control" type="text" [(ngModel)]="productObj.productSku">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Nombre</label>
+                        <input class="form-control" type="text" [(ngModel)]="productObj.productName">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label for="">Precio</label>
+                        <input class="form-control" type="text" [(ngModel)]="productObj.productPrice">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Nombre corto del producto</label>
+                        <input class="form-control" type="text" [(ngModel)]="productObj.productShortName">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label for="">Plazo de entrega</label>
+                        <input class="form-control" type="text" [(ngModel)]="productObj.deliveryTimeSpan">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Categoría</label>
+                        <select [(ngModel)]="productObj.categoryId" class="form-select">
+                            <option selected *ngFor="let cate of categoriaList" [value]="cate.categoryId">{{cate.categoryName}}</option>
+                        </select>                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="">Imagen</label>
+                        <input class="form-control" type="text" [(ngModel)]="productObj.productImageUrl">
+                    </div>
+                </div>
+                <div class="row">    
+                    <div class="col-12">
+                        <label for="">Descripción</label>
+                        <textarea class="form-control" rows="4" [(ngModel)]="productObj.productDescription"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">                
+                        <button class="btn btn-success">Reiniciar</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-success" (click)="guardarProducto()">Crear producto</button>                                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
